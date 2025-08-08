@@ -223,7 +223,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
       loader?.classList.add('hidden');
-      resultSpan.textContent = spinsLeft;
+
+    const promo = document.querySelector('.promo');
+    if (promo) promo.classList.add('show');
+
+    if (resultSpan) resultSpan.textContent = spinsLeft;
+
       document.getElementById('start')?.classList.add('active');
       document.body.classList.add('active');
     }, 1500);
