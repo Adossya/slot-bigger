@@ -4,23 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Play Bigger Bass Splash Slot</title>
-    <link rel="icon" type="image/x-icon" sizes="16x16" href="favicon-16x16.ico" />
-    <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon-32x32.ico" />
-    <link rel="icon" type="image/x-icon" sizes="48x48" href="favicon-48x48.ico" />
+    <link rel="icon" type="image/x-icon" sizes="16x16" href="./favicon-16x16.ico" />
+    <link rel="icon" type="image/x-icon" sizes="32x32" href="./favicon-32x32.ico" />
+    <link rel="icon" type="image/x-icon" sizes="48x48" href="./favicon-48x48.ico" />
     <link rel="stylesheet" href="css/style.min.css">
 
 </head>
 <body class="body active">
 
+
+    
+    <!--Loader-->
     <div class="loader">
-        <img src="./img/loader.svg" alt="Loading..." />
+  <div class="loader__title"></div>
+  <img src="./img/loader_fisher.png" alt="loader_fisher" class="loader__fisher">
+  <div class="loader__loading">
+    <div class="loader__loading-wrapper">
+        <img src="./img/loading.png" alt="loading" class="loader__loading--bg">
+        <div class="loader__loading--shadow"></div>
     </div>
+
+    <img src="./img/loader_cocos.png" alt="cocos" class="loader__loading--cocos">
+  </div>
+</div>
+
+
     <!--Promo-->
     <section class="promo">
  
     <div class="promo__slot">
         <div class="promo__slot-bg">
-            <img src="./img/slot-grid.png" alt="grid">
+            <img src="/img/slot-grid.png" alt="grid">
         </div>
         <div class="promo__cells" id="slot-grid">
 
@@ -54,7 +68,7 @@
 
     <!--Pop-end-->
     <div id="end" class="pop pop-end">
-    <div class="pop__overlay"></div>
+    <div class="pop__overlay pop-end__overlay"></div>
     <div class="pop__wrapper pop-end__wrapper">
         <h2 class="pop__title pop-end__title">WELL<br>DONE! </h2>
         <div class="pop-end__winner">YOU WON:</div>

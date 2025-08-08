@@ -4,31 +4,18 @@ const images = [
   'float.png', 'jack.png', 'king.png', 'queen.png', 'rod.png', 'scatter.png', 'ten.png'
 ];
 
-const startGrid = [
-  ['fish-little.png', 'ten.png', 'fish-middle.png'],
-  ['fisher.png', 'float.png', 'queen.png'],
-  ['king.png', 'fish-middle.png', 'beer.png']
-];
 
-const spinGrid1 = [
-  ['ace.png', 'fish-small.png', 'rod.png'],
-  ['beer.png', 'beer.png', 'float.png'],
-  ['fish-little.png', 'fisher.png', 'jack.png']
-];
+const colum1 = ['boat.png','scatter.png','float.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','fish-big.png','fish-golden.png','rod.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','ace.png','beer.png','fish-little.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','fish-little.png','fisher.png','king.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png'];
 
-const spinGrid2 = [
-  ['fish-big.png', 'fish-middle.png', 'ten.png'],
-  ['fish-golden.png', 'fish-golden.png', 'boat.png'],
-  ['rod.png', 'beer.png', 'queen.png']
-];
+const colum2 = ['rod.png','scatter.png','king.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','fish-middle.png','fish-golden.png','queen.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','fish-small.png','beer.png','fisher.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','ten.png','float.png','fish-middle.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png'];
 
-const spinGrid3 = [
-  ['boat.png', 'rod.png', 'jack.png'],
-  ['scatter.png', 'scatter.png', 'scatter.png'],
-  ['float.png', 'fish-golden.png', 'king.png']
-];
+const colum3 = ['jack.png','scatter.png','fish-golden.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','ten.png','boat.png','beer.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','rod.png','float.png','jack.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','fish-middle.png','queen.png','beer.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png','random.png'];
 
-const allSpins = [spinGrid1, spinGrid2, spinGrid3];
+const allSpins = [
+  [ ['ace.png','fish-small.png','rod.png'], ['beer.png','beer.png','float.png'], ['fish-little.png','fisher.png','jack.png'] ],
+  [ ['fish-big.png','fish-middle.png','ten.png'], ['fish-golden.png','fish-golden.png','boat.png'], ['rod.png','beer.png','queen.png'] ],
+  [ ['boat.png','rod.png','jack.png'], ['scatter.png','scatter.png','scatter.png'], ['float.png','fish-golden.png','king.png'] ]
+];
 
 const gridWrapper = document.querySelector('.promo__cells');
 const resultSpan = document.querySelector('.promo__result-count span');
@@ -54,78 +41,72 @@ function createCell(imageName) {
   return cell;
 }
 
-function generateGrid(grid, withRandom = true) {
+function generateStaticColumns(columnsData) {
   gridWrapper.innerHTML = '';
 
-  for (let col = 0; col < 3; col++) {
+  columnsData.forEach(colArray => {
     const column = document.createElement('div');
     column.classList.add('promo__column');
 
     const columnInner = document.createElement('div');
     columnInner.classList.add('promo__column-inner');
 
-    // Сначала финальные — они сверху
-    for (let row = 0; row < 3; row++) {
-      const finalImage = grid[row][col];
-      const cell = createCell(finalImage);
-      cell.classList.add('final-cell');
-      columnInner.appendChild(cell);
-    }
+    colArray.forEach(imageName => {
+      const actualImage = imageName === 'random.png'
+        ? images[Math.floor(Math.random() * images.length)]
+        : imageName;
 
-    // Потом 6 рандомных — снизу
-    if (withRandom) {
-      for (let i = 0; i < 6; i++) {
-        const randomImage = images[Math.floor(Math.random() * images.length)];
-        const cell = createCell(randomImage);
-        columnInner.appendChild(cell);
-      }
-    }
+      const cell = createCell(actualImage);
+      columnInner.appendChild(cell);
+    });
 
     column.appendChild(columnInner);
     gridWrapper.appendChild(column);
+  });
+}
+
+
+function getCellHeightRem() {
+  const width = window.innerWidth;
+
+  if (width < 375) {
+    return 16;
+  } else if (width < 480) {
+    return 20;
+  } else if (width < 1080) {
+    return 25;
+  } else {
+    return 28;  
   }
 }
 
+const gapRem = 0.3; 
 
-function updateFinalCells(grid) {
-  const columns = document.querySelectorAll('.promo__column-inner');
+let cellHeightRem = getCellHeightRem();
+let totalCellHeightRem = cellHeightRem + gapRem;
 
-  columns.forEach((columnInner, colIndex) => {
-    const cells = columnInner.querySelectorAll('.promo__cell');
 
-    // Первые 3 ячейки — финальные
-    for (let row = 0; row < 3; row++) {
-      const img = cells[row].querySelector('img');
-      const imageName = grid[row][colIndex];
-      img.src = `./img/slots/${imageName}`;
-      img.alt = imageName;
-      img.className = getImageClass(imageName);
-    }
-  });
-}
+let currentOffsetRem = -totalCellHeightRem * 36;
+const stepRem = totalCellHeightRem * 12;
 
 function spinColumns(callback) {
   const columns = document.querySelectorAll('.promo__column-inner');
-  const cellHeightRem = 22.2; // высота одной ячейки
-  const scrollCells = 6; // рандомных ячеек
-  const initialOffset = -cellHeightRem * scrollCells;
+
+  currentOffsetRem += stepRem; 
 
   columns.forEach((columnInner, index) => {
-    // Сразу сдвигаем наверх, чтобы в кадре были рандомные
+
     columnInner.style.transition = 'none';
-    columnInner.style.transform = `translateY(${initialOffset}rem)`;
-    void columnInner.offsetWidth; // форс-рефлоу
+    columnInner.style.transform = `translateY(${currentOffsetRem - stepRem}rem)`;
 
     setTimeout(() => {
-      // Потом плавно опускаем колонку вниз, финальные ячейки появляются сверху
       columnInner.style.transition = 'transform 2s ease-out';
-      columnInner.style.transform = `translateY(0rem)`;
-    }, index * 250);
+      columnInner.style.transform = `translateY(${currentOffsetRem}rem)`;
+    }, index * 400); 
   });
 
   if (typeof callback === 'function') {
-    // чуть позже вызовем коллбэк
-    setTimeout(callback, 200);
+    setTimeout(callback, 2500 + (columns.length - 1) * 700);
   }
 }
 
@@ -156,86 +137,105 @@ popStartBtn.addEventListener('click', () => {
   document.body.classList.remove('active');
 });
 
-
-
 spinButton.addEventListener('click', () => {
   if (spinsLeft <= 0 || currentSpin >= allSpins.length) return;
 
-  const finalGrid = allSpins[currentSpin];
+  spinButton.disabled = true; 
+
   currentSpin++;
   spinsLeft--;
   resultSpan.textContent = spinsLeft;
 
-  // 🔁 Запускаем прокрутку СТАРЫХ колонок
   spinColumns(() => {
-    // ⏱ Через задержку (после начала анимации) → заменяем нижние ячейки на финальные
-    updateFinalCells(finalGrid);
-
-    // 🎉 Если последний спин — добавим анимацию на scatter
+  
     if (currentSpin === allSpins.length) {
       setTimeout(() => {
-        const finalScatterImages = document.querySelectorAll('.final-cell img');
+        const finalScatterImages = document.querySelectorAll('.promo__cell img');
         finalScatterImages.forEach(img => {
           if (img.src.includes('scatter.png')) {
             img.classList.add('pulse-anim');
           }
         });
-      }, 2500);
+      }, 100);
     }
 
-    // 💀 Финальная сцена
+
     if (spinsLeft === 0) {
-      const element = document.querySelector('.promo__btn');
-      element.style.backgroundImage = 'url("./img/button-dis.png")';
 
       setTimeout(() => {
         document.getElementById('end').classList.add('active');
         document.body.classList.add('active');
         startTimer(15);
-      }, 5000);
+      }, 4000);
+
+
+      return; 
     }
+
+    spinButton.disabled = false;
   });
+
+  if (spinsLeft > 0) {
+    setTimeout(() => {
+      spinButton.disabled = false;
+    }, 3500);
+  }
 });
 
 
-window.addEventListener('DOMContentLoaded', () => {
-  // Показываем стартовую сетку С РАНДОМНЫМИ сверху
-  generateGrid(startGrid, true);
+window.addEventListener('resize', () => {
+  cellHeightRem = getCellHeightRem();
+  totalCellHeightRem = cellHeightRem + gapRem;
+});
 
-  // Ждём загрузки всех картинок
+
+
+window.addEventListener('DOMContentLoaded', () => {
+
+  generateStaticColumns([colum1, colum2, colum3]);
+
   const imagesToLoad = Array.from(document.querySelectorAll('.promo__cell img'));
   let loadedCount = 0;
 
+  const checkLoaded = () => {
+    loadedCount++;
+    if (loadedCount === imagesToLoad.length) {
+      showStart();
+    }
+  };
+
   imagesToLoad.forEach(img => {
     if (img.complete) {
-      loadedCount++;
+      checkLoaded();
     } else {
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === imagesToLoad.length) showStart();
-      };
-      img.onerror = () => {
-        loadedCount++;
-        if (loadedCount === imagesToLoad.length) showStart();
-      };
+      img.onload = img.onerror = checkLoaded;
     }
   });
 
-  if (loadedCount === imagesToLoad.length) {
-    showStart();
-  }
-
   function showStart() {
-    // Прячем лоадер
-    document.querySelector('.loader').classList.add('hidden');
+    const loader = document.querySelector('.loader');
+    const cocos = document.querySelector('.loader__loading--cocos');
+    const shadow = document.querySelector('.loader__loading--shadow');
+    const resultSpan = document.querySelector('.result-span');
 
-    // Начинаем плавное появление сетки, как при обычном спине
+    cocos?.classList.add('animate');
+    shadow?.classList.add('shrink');
+
     setTimeout(() => {
-      spinColumns();
+      loader?.classList.add('hidden');
+      resultSpan.textContent = spinsLeft;
+      document.getElementById('start')?.classList.add('active');
+      document.body.classList.add('active');
+    }, 1500);
+
+
+    setTimeout(() => {
+      const columns = document.querySelectorAll('.promo__column-inner');
+      columns.forEach(columnInner => {
+        columnInner.style.transition = 'transform 2s ease-out';
+        columnInner.style.transform = `translateY(${currentOffsetRem}rem)`; 
+      });
     }, 100);
-
-    resultSpan.textContent = spinsLeft;
-
     setTimeout(() => {
       document.getElementById('start').classList.add('active');
       document.body.classList.add('active');
