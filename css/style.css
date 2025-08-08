@@ -205,10 +205,9 @@ li {
   position: fixed;
   left: 0;
   right: 0;
-  background: url("../img/loader_bg.png") center center/cover no-repeat;
   width: 108rem;
   max-width: 108rem;
-  height: 193.5rem;
+  height: 194.5rem;
   max-height: 194.5rem;
   margin: 0 auto;
   overflow: hidden;
@@ -228,8 +227,7 @@ li {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: -8.5rem;
-  background: url("../img/game_title.png") center center/contain no-repeat;
+  top: -4rem;
   width: 65rem;
   height: 65rem;
   z-index: 100;
@@ -799,7 +797,6 @@ li {
 
 @media (max-width: 1080px) {
   .loader {
-    background: url("../img/loader_bg.png") center center/cover no-repeat;
     height: 100vh;
     max-height: 100vh;
     align-items: center;
@@ -1331,8 +1328,7 @@ li {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: -6.5rem;
-    background: url("../img/game_title.png") center center/contain no-repeat;
+    top: -4rem;
     width: 65rem;
     height: 65rem;
     z-index: 100;
@@ -1399,8 +1395,7 @@ li {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: -5.5rem;
-    background: url("../img/game_title.png") center center/contain no-repeat;
+    top: -2.75rem;
     width: 65rem;
     height: 65rem;
     z-index: 100;
