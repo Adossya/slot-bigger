@@ -311,11 +311,13 @@ li {
   flex-direction: column;
   align-items: center;
   transform-origin: top center;
-  display: none;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .promo.show {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
 }
 
 .promo__slot {
