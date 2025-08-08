@@ -194,7 +194,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   generateStaticColumns([colum1, colum2, colum3]);
 
-  const imagesToLoad = Array.from(document.querySelectorAll('.promo__cell img'));
+  const imagesToLoad = Array.from(document.querySelectorAll('img'));
   let loadedCount = 0;
 
   const checkLoaded = () => {
