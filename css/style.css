@@ -311,6 +311,11 @@ li {
   flex-direction: column;
   align-items: center;
   transform-origin: top center;
+  display: none;
+}
+
+.promo.show {
+  display: flex;
 }
 
 .promo__slot {
